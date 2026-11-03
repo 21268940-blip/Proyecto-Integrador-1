@@ -12,27 +12,31 @@ namespace BibliotecaEscolar
             catalogo = new List<Titulo>();
         }
 
-        // Método para agregar títulos
+        
         public void AgregarTitulo(Titulo nuevoTitulo)
         {
+            if (nuevoTitulo == null)
+            {
+                throw new ArgumentNullException(nameof(nuevoTitulo), "El título no puede ser nulo.");
+            }
             catalogo.Add(nuevoTitulo);
         }
 
-        // Método para obtener la lista actual
         public List<Titulo> ObtenerCatalogo()
         {
             return catalogo;
         }
 
-        // ALGORITMO 1: Ordenamiento por Inserción (Insertion Sort) manual por Nombre
+        // ALGORITMO 1: Insertion Sort con protección para listas vacías
         public void OrdenarPorNombre()
         {
+            if (catalogo.Count <= 1) return;
+
             for (int i = 1; i < catalogo.Count; i++)
             {
                 Titulo clave = catalogo[i];
                 int j = i - 1;
 
-                // Compara cadenas lexicográficamente
                 while (j >= 0 && string.Compare(catalogo[j].Nombre, clave.Nombre, StringComparison.OrdinalIgnoreCase) > 0)
                 {
                     catalogo[j + 1] = catalogo[j];
@@ -42,10 +46,14 @@ namespace BibliotecaEscolar
             }
         }
 
-        // ALGORITMO 2: Búsqueda Binaria manual por Nombre exacto
-        // NOTA: El catálogo DEBE estar ordenado antes de ejecutar este método
-        public Titulo BuscarPorNombreBinario(string nombreBuscado)
+        // ALGORITMO 2: Búsqueda Binaria con validación de entradas
+        public Titulo? BuscarPorNombreBinario(string nombreBuscado)
         {
+            if (string.IsNullOrWhiteSpace(nombreBuscado) || catalogo.Count == 0)
+            {
+                return null;
+            }
+
             int izquierda = 0;
             int derecha = catalogo.Count - 1;
 
@@ -56,20 +64,20 @@ namespace BibliotecaEscolar
 
                 if (comparacion == 0)
                 {
-                    return catalogo[medio]; // Elemento encontrado
+                    return catalogo[medio];
                 }
 
                 if (comparacion < 0)
                 {
-                    izquierda = medio + 1; // Buscar en la mitad derecha
+                    izquierda = medio + 1;
                 }
                 else
                 {
-                    derecha = medio - 1; // Buscar en la mitad izquierda
+                    derecha = medio - 1;
                 }
             }
 
-            return null; // Elemento no encontrado
+            return null;
         }
     }
 }

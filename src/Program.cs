@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace BibliotecaEscolar
 {
@@ -17,97 +17,126 @@ namespace BibliotecaEscolar
 
             while (!salir)
             {
-                Console.Clear();
-                Console.WriteLine("==================================================");
-                Console.WriteLine("   SISTEMA DE GESTIÓN DE BIBLIOTECA ESCOLAR");
-                Console.WriteLine("==================================================");
-                Console.WriteLine("1. Registrar nuevo libro");
-                Console.WriteLine("2. Mostrar catálogo de libros");
-                Console.WriteLine("3. Ordenar catálogo por Título (Insertion Sort)");
-                Console.WriteLine("4. Buscar libro por Título (Búsqueda Binaria)");
-                Console.WriteLine("5. Salir");
-                Console.WriteLine("==================================================");
-                Console.Write("Seleccione una opción: ");
-
-                string opcion = Console.ReadLine();
-
-                switch (opcion)
+                try
                 {
-                    case "1":
-                        Console.WriteLine("\n--- REGISTRAR NUEVO LIBRO ---");
-                        Console.Write("ID del libro: ");
-                        string id = Console.ReadLine();
-                        Console.Write("Título del libro: ");
-                        string nombre = Console.ReadLine();
-                        Console.Write("Autor: ");
-                        string autor = Console.ReadLine();
-                        Console.Write("Cantidad de ejemplares: ");
-                        if (int.TryParse(Console.ReadLine(), out int cantidad))
-                        {
-                            miBiblioteca.AgregarTitulo(new Titulo(id, nombre, autor, cantidad));
-                            Console.WriteLine("\n¡Libro registrado exitosamente!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("\nError: La cantidad debe ser un número entero.");
-                        }
-                        Pausar();
-                        break;
+                    Console.Clear();
+                    Console.WriteLine("==================================================");
+                    Console.WriteLine("   SISTEMA DE GESTIÓN DE BIBLIOTECA ESCOLAR");
+                    Console.WriteLine("==================================================");
+                    Console.WriteLine("1. Registrar nuevo libro");
+                    Console.WriteLine("2. Mostrar catálogo de libros");
+                    Console.WriteLine("3. Ordenar catálogo por Título (Insertion Sort)");
+                    Console.WriteLine("4. Buscar libro por Título (Búsqueda Binaria)");
+                    Console.WriteLine("5. Salir");
+                    Console.WriteLine("==================================================");
+                    Console.Write("Seleccione una opción: ");
 
-                    case "2":
-                        Console.WriteLine("\n--- CATÁLOGO ACTUAL DE LA BIBLIOTECA ---");
-                        var catalogo = miBiblioteca.ObtenerCatalogo();
-                        if (catalogo.Count == 0)
-                        {
-                            Console.WriteLine("El catálogo está vacío.");
-                        }
-                        else
-                        {
-                            foreach (var libro in catalogo)
+                    string? opcion = Console.ReadLine();
+
+                    switch (opcion)
+                    {
+                        case "1":
+                            Console.WriteLine("\n--- REGISTRAR NUEVO LIBRO ---");
+                            
+                            Console.Write("ID del libro: ");
+                            string id = Console.ReadLine()?.Trim() ?? "";
+                            if (string.IsNullOrWhiteSpace(id))
                             {
-                                Console.WriteLine(libro);
+                                Console.WriteLine("Error: El ID no puede estar vacío.");
+                                Pausar();
+                                break;
                             }
-                        }
-                        Pausar();
-                        break;
 
-                    case "3":
-                        Console.WriteLine("\n--- ORDENANDO CATÁLOGO ---");
-                        miBiblioteca.OrdenarPorNombre();
-                        Console.WriteLine("¡Catálogo ordenado alfabéticamente por Título utilizando Insertion Sort!");
-                        Pausar();
-                        break;
+                            Console.Write("Título del libro: ");
+                            string nombre = Console.ReadLine()?.Trim() ?? "";
+                            if (string.IsNullOrWhiteSpace(nombre))
+                            {
+                                Console.WriteLine("Error: El Título no puede estar vacío.");
+                                Pausar();
+                                break;
+                            }
 
-                    case "4":
-                        Console.WriteLine("\n--- BÚSQUEDA BINARIA DE LIBROS ---");
-                        Console.Write("Ingrese el título exacto a buscar: ");
-                        string tituloBuscado = Console.ReadLine();
+                            Console.Write("Autor: ");
+                            string autor = Console.ReadLine()?.Trim() ?? "";
 
-                        // Se recomienda ordenar primero para asegurar el correcto funcionamiento de la Búsqueda Binaria
-                        miBiblioteca.OrdenarPorNombre();
-                        
-                        Titulo encontrado = miBiblioteca.BuscarPorNombreBinario(tituloBuscado);
+                            Console.Write("Cantidad de ejemplares: ");
+                            if (int.TryParse(Console.ReadLine(), out int cantidad) && cantidad >= 0)
+                            {
+                                miBiblioteca.AgregarTitulo(new Titulo(id, nombre, autor, cantidad));
+                                Console.WriteLine("\n¡Libro registrado exitosamente!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nError: Ingrese un número entero válido (mayor o igual a 0).");
+                            }
+                            Pausar();
+                            break;
 
-                        if (encontrado != null)
-                        {
-                            Console.WriteLine($"\n[ENCONTRADO] -> {encontrado}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("\n[NO ENCONTRADO] El libro no existe en el catálogo.");
-                        }
-                        Pausar();
-                        break;
+                        case "2":
+                            Console.WriteLine("\n--- CATÁLOGO ACTUAL DE LA BIBLIOTECA ---");
+                            var catalogo = miBiblioteca.ObtenerCatalogo();
+                            if (catalogo.Count == 0)
+                            {
+                                Console.WriteLine("El catálogo está vacío.");
+                            }
+                            else
+                            {
+                                foreach (var libro in catalogo)
+                                {
+                                    Console.WriteLine(libro);
+                                }
+                            }
+                            Pausar();
+                            break;
 
-                    case "5":
-                        salir = true;
-                        Console.WriteLine("\nSaliendo del sistema...");
-                        break;
+                        case "3":
+                            Console.WriteLine("\n--- ORDENANDO CATÁLOGO ---");
+                            miBiblioteca.OrdenarPorNombre();
+                            Console.WriteLine("¡Catálogo ordenado alfabéticamente por Título utilizando Insertion Sort!");
+                            Pausar();
+                            break;
 
-                    default:
-                        Console.WriteLine("\nOpción inválida. Intente de nuevo.");
-                        Pausar();
-                        break;
+                        case "4":
+                            Console.WriteLine("\n--- BÚSQUEDA BINARIA DE LIBROS ---");
+                            Console.Write("Ingrese el título exacto a buscar: ");
+                            string tituloBuscado = Console.ReadLine()?.Trim() ?? "";
+
+                            if (string.IsNullOrWhiteSpace(tituloBuscado))
+                            {
+                                Console.WriteLine("\nError: Debe ingresar un término de búsqueda válido.");
+                            }
+                            else
+                            {
+                                miBiblioteca.OrdenarPorNombre();
+                                Titulo? encontrado = miBiblioteca.BuscarPorNombreBinario(tituloBuscado);
+
+                                if (encontrado != null)
+                                {
+                                    Console.WriteLine($"\n[ENCONTRADO] -> {encontrado}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\n[NO ENCONTRADO] El libro no existe en el catálogo.");
+                                }
+                            }
+                            Pausar();
+                            break;
+
+                        case "5":
+                            salir = true;
+                            Console.WriteLine("\nSaliendo del sistema...");
+                            break;
+
+                        default:
+                            Console.WriteLine("\nOpción inválida. Intente de nuevo.");
+                            Pausar();
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\nOcurrió un error inesperado: {ex.Message}");
+                    Pausar();
                 }
             }
         }
