@@ -12,7 +12,6 @@ namespace BibliotecaEscolar
             catalogo = new List<Titulo>();
         }
 
-        
         public void AgregarTitulo(Titulo nuevoTitulo)
         {
             if (nuevoTitulo == null)
@@ -27,7 +26,7 @@ namespace BibliotecaEscolar
             return catalogo;
         }
 
-        // ALGORITMO 1: Insertion Sort con protección para listas vacías
+        // ALGORITMO 1: Insertion Sort con validación de tamaño
         public void OrdenarPorNombre()
         {
             if (catalogo.Count <= 1) return;
@@ -46,7 +45,7 @@ namespace BibliotecaEscolar
             }
         }
 
-        // ALGORITMO 2: Búsqueda Binaria con validación de entradas
+        // ALGORITMO 2: Búsqueda Binaria con control de vacíos
         public Titulo? BuscarPorNombreBinario(string nombreBuscado)
         {
             if (string.IsNullOrWhiteSpace(nombreBuscado) || catalogo.Count == 0)

@@ -9,7 +9,6 @@ namespace BibliotecaEscolar
             Biblioteca miBiblioteca = new Biblioteca();
             bool salir = false;
 
-            // Datos iniciales de prueba
             miBiblioteca.AgregarTitulo(new Titulo("B001", "Cien Anos de Soledad", "Gabriel Garcia Marquez", 5));
             miBiblioteca.AgregarTitulo(new Titulo("B002", "Don Quijote de la Mancha", "Miguel de Cervantes", 3));
             miBiblioteca.AgregarTitulo(new Titulo("B003", "El Aleph", "Jorge Luis Borges", 10));
@@ -67,7 +66,7 @@ namespace BibliotecaEscolar
                             }
                             else
                             {
-                                Console.WriteLine("\nError: Ingrese un número entero válido (mayor o igual a 0).");
+                                Console.WriteLine("\nError: Ingrese un número entero válido (>= 0).");
                             }
                             Pausar();
                             break;
@@ -92,7 +91,7 @@ namespace BibliotecaEscolar
                         case "3":
                             Console.WriteLine("\n--- ORDENANDO CATÁLOGO ---");
                             miBiblioteca.OrdenarPorNombre();
-                            Console.WriteLine("¡Catálogo ordenado alfabéticamente por Título utilizando Insertion Sort!");
+                            Console.WriteLine("¡Catálogo ordenado alfabéticamente!");
                             Pausar();
                             break;
 
@@ -103,7 +102,7 @@ namespace BibliotecaEscolar
 
                             if (string.IsNullOrWhiteSpace(tituloBuscado))
                             {
-                                Console.WriteLine("\nError: Debe ingresar un término de búsqueda válido.");
+                                Console.WriteLine("\nError: El término de búsqueda no puede estar vacío.");
                             }
                             else
                             {
