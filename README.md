@@ -20,4 +20,4 @@ Sistema en consola desarrollado para administrar títulos de una biblioteca esco
 ## Instrucciones de Ejecución
 1. Clonar el repositorio:
    ```bash
-   git clone [https://github.com/tu-usuario/Proyecto-Integrador-1.git](https://github.com/tu-usuario/Proyecto-Integrador-1.git)
+   git clone [https://github.com/21268940-blip/Proyecto-Integrador-1](https://github.com/21268940-blip/Proyecto-Integrador-1)
