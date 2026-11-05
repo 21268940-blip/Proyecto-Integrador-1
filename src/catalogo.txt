@@ -1,0 +1,4 @@
+B001|Cien Anos de Soledad|Gabriel Garcia Marquez|5
+B002|Don Quijote de la Mancha|Miguel de Cervantes|3
+B003|El Aleph|Jorge Luis Borges|10
+B004|Rayuela|Julio Cortazar|2
